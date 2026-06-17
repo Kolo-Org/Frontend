@@ -1,0 +1,1 @@
+export const WHATSAPP_API_VERSION = "v16.0";

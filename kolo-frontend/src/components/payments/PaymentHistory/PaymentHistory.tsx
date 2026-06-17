@@ -1,0 +1,1 @@
+export const PaymentHistory = () => <div>Payment History</div>;

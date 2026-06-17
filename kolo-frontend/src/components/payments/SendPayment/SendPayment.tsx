@@ -1,0 +1,1 @@
+export const SendPayment = () => <div>Send Payment</div>;

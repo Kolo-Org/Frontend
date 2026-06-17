@@ -1,0 +1,1 @@
+export const GroupCard = () => <div>Group Card</div>;
