@@ -1,104 +1,205 @@
+const imgWhatsAppChat =
+  "https://www.figma.com/api/mcp/asset/68217483-2ce4-40fc-8dac-c649d927a9d0";
+const imgGrowthVisualization =
+  "https://www.figma.com/api/mcp/asset/63adfb57-7e7f-4a9e-a6e3-234d770b0c17";
+const imgCommunityIcon =
+  "https://www.figma.com/api/mcp/asset/3aad9b4e-97b5-4549-8655-306e78b3873d";
+const imgWhatsAppIcon =
+  "https://www.figma.com/api/mcp/asset/12c2b83e-e28d-4ffc-a6f6-ea9665232f79";
+const imgMilitaryIcon =
+  "https://www.figma.com/api/mcp/asset/75e1dd35-cdcf-4d87-a092-6f864e2b59ed";
+
 export default function Features() {
   return (
-    <section id="features" className="bg-[#f9f8f7] py-24 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-14">
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
+    <section
+      id="features"
+      className="py-24 px-10"
+      style={{ background: "#f6f3f5" }}
+    >
+      <div className="max-w-[1200px] mx-auto flex flex-col gap-16 px-4">
+        {/* Section header */}
+        <div className="flex flex-col gap-2 items-center w-full">
+          <h2 className="font-display font-semibold text-[32px] leading-[1.2] text-[#1b1b1d] text-center">
             Engineered for Transparency
           </h2>
-          <p className="text-slate-500 text-lg">The future of social finance, simplified.</p>
+          <p className="text-[#45464d] text-base text-center">
+            The future of social finance, simplified.
+          </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-5">
-          {/* Community Pools */}
-          <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm flex flex-col">
-            <div className="w-11 h-11 rounded-2xl bg-emerald-50 flex items-center justify-center mb-6">
-              <svg className="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
-              </svg>
-            </div>
-            <h3 className="font-display font-semibold text-slate-900 text-xl mb-3">Community Pools</h3>
-            <p className="text-slate-500 text-sm leading-relaxed mb-8">
-              Launch a private saving circle with friends, family, or your local business community.
-              Automate contributions and payouts without the manual headache.
-            </p>
-            <div className="mt-auto bg-slate-50 rounded-2xl p-4">
-              <div className="flex justify-between items-center mb-2.5">
-                <span className="text-xs font-medium text-slate-700">Education Fund</span>
-                <span className="text-xs font-semibold text-emerald-600">65% Complete</span>
-              </div>
-              <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
-                <div className="h-full bg-emerald-500 rounded-full transition-all" style={{ width: "65%" }} />
-              </div>
-            </div>
-          </div>
+        {/* Bento grid — 12 columns */}
+        <div className="grid grid-cols-12 gap-8">
 
-          {/* WhatsApp Native */}
-          <div className="bg-emerald-800 rounded-3xl p-8 flex flex-col relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-48 h-48 rounded-full bg-emerald-700/50 -translate-y-1/3 translate-x-1/3" aria-hidden="true" />
-            <div className="relative z-10">
-              <div className="w-11 h-11 rounded-2xl bg-emerald-700 flex items-center justify-center mb-6">
-                <svg className="w-5 h-5 text-emerald-300" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM11.997 2C6.48 2 2 6.48 2 12c0 1.76.46 3.41 1.27 4.84L2 22l5.26-1.38A9.97 9.97 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 11.997 2z" />
-                </svg>
+          {/* Feature 1: Community Pools — cols 1–8 */}
+          <div
+            className="col-span-8 flex flex-col justify-between rounded-3xl p-16"
+            style={{
+              background: "#fcf8fa",
+              boxShadow: "-8px -8px 16px 0px white, 8px 8px 16px 0px #d1d5db",
+            }}
+          >
+            <div className="flex flex-col gap-4">
+              <div
+                className="w-14 h-14 flex items-center justify-center rounded-2xl shrink-0"
+                style={{
+                  boxShadow: "-6px -6px 12px 0px white, 6px 6px 12px 0px #d1d5db",
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={imgCommunityIcon} alt="" className="w-[29px] h-[21px]" />
               </div>
-              <h3 className="font-display font-semibold text-white text-xl mb-3">WhatsApp Native</h3>
-              <p className="text-emerald-200 text-sm leading-relaxed">
-                No new apps to download. Manage your entire vault through a secure,
-                encrypted WhatsApp chat.
+              <div className="pt-2">
+                <h3 className="font-display font-medium text-2xl text-[#1b1b1d] leading-[1.3]">
+                  Community Pools
+                </h3>
+              </div>
+              <p className="text-[#45464d] text-base leading-relaxed">
+                Launch a private saving circle with friends, family, or your local
+                business community. Automate contributions and payouts without the
+                manual headache.
               </p>
             </div>
-            {/* Mini chat preview */}
-            <div className="relative z-10 mt-8 space-y-2.5">
-              {[
-                { from: "bot", text: "Your pool has been funded ✓" },
-                { from: "user", text: "Send $50 to Education Fund" },
-                { from: "bot", text: "Payment confirmed in 3s 🚀" },
-              ].map(({ from, text }, i) => (
-                <div key={i} className={`flex ${from === "user" ? "justify-end" : "justify-start"}`}>
-                  <div className={`text-[11px] px-3 py-1.5 rounded-xl max-w-[75%] ${from === "user" ? "bg-emerald-500 text-white rounded-tr-sm" : "bg-emerald-900/70 text-emerald-100 rounded-tl-sm"}`}>
-                    {text}
-                  </div>
-                </div>
-              ))}
+
+            {/* Progress bar */}
+            <div className="pt-16 flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold text-[#1b1b1d] tracking-[0.01em]">
+                  Education Fund
+                </span>
+                <span className="text-sm font-semibold text-[#006c49] tracking-[0.01em]">
+                  85% Complete
+                </span>
+              </div>
+              <div
+                className="relative h-3 rounded-full"
+                style={{
+                  background: "#fcf8fa",
+                  boxShadow:
+                    "inset 2px 2px 5px 0px #d1d5db, inset -2px -2px 5px 0px white",
+                }}
+              >
+                <div
+                  className="absolute inset-y-0 left-0 rounded-full"
+                  style={{
+                    width: "85%",
+                    background: "#10b981",
+                    boxShadow: "2px 2px 5px 0px rgba(16,185,129,0.3)",
+                  }}
+                />
+              </div>
             </div>
           </div>
 
-          {/* Military-Grade */}
-          <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm flex flex-col">
-            <div className="w-11 h-11 rounded-2xl bg-slate-50 flex items-center justify-center mb-6">
-              <svg className="w-5 h-5 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
+          {/* Feature 2: WhatsApp Native — cols 9–12 */}
+          <div
+            className="col-span-4 flex flex-col rounded-3xl p-8"
+            style={{ background: "#006c49" }}
+          >
+            <div className="h-20 flex items-start pb-6 shrink-0">
+              <div
+                className="w-14 h-14 flex items-center justify-center rounded-2xl"
+                style={{ background: "rgba(255,255,255,0.2)" }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={imgWhatsAppIcon} alt="" className="w-[27px] h-[27px]" />
+              </div>
             </div>
-            <h3 className="font-display font-semibold text-slate-900 text-xl mb-3">Military-Grade</h3>
-            <p className="text-slate-500 text-sm leading-relaxed">
-              Every transaction is anchored to the Stellar network, providing immutable
-              proof of your savings. Your funds, your keys, your control.
+
+            <div className="pb-4">
+              <h3 className="font-display font-medium text-2xl text-white leading-[1.3] pb-4">
+                WhatsApp Native
+              </h3>
+              <p className="text-white/80 text-base leading-relaxed pb-8">
+                No new apps to download. Manage your entire vault through a
+                secure, encrypted WhatsApp chat.
+              </p>
+            </div>
+
+            <div className="flex items-center justify-center mt-auto">
+              <div
+                className="w-[200px] h-[200px] rounded-2xl overflow-hidden relative opacity-90"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imgWhatsAppChat}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-white mix-blend-saturation rounded-2xl" />
+              </div>
+            </div>
+          </div>
+
+          {/* Feature 3: Military-Grade — cols 1–4, row 2 */}
+          <div
+            className="col-span-4 flex flex-col rounded-3xl p-8"
+            style={{
+              background: "#fcf8fa",
+              boxShadow: "-8px -8px 16px 0px white, 8px 8px 16px 0px #d1d5db",
+            }}
+          >
+            <div className="h-20 flex items-start pb-6 shrink-0">
+              <div
+                className="w-14 h-14 flex items-center justify-center rounded-2xl"
+                style={{
+                  boxShadow: "-6px -6px 12px 0px white, 6px 6px 12px 0px #d1d5db",
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={imgMilitaryIcon} alt="" className="w-[21px] h-[27px]" />
+              </div>
+            </div>
+            <h3 className="font-display font-medium text-2xl text-[#1b1b1d] leading-[1.3] pb-4">
+              Military-Grade
+            </h3>
+            <p className="text-[#45464d] text-base leading-relaxed">
+              Every transaction is anchored to the Stellar network, providing
+              immutable proof of your savings.
             </p>
           </div>
 
-          {/* Real-time Yields */}
-          <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm flex flex-col relative overflow-hidden">
-            <div className="w-11 h-11 rounded-2xl bg-amber-50 flex items-center justify-center mb-6">
-              <svg className="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-                <polyline points="16 7 22 7 22 13" />
-              </svg>
+          {/* Feature 4: Real-time Yields — cols 5–12, row 2 */}
+          <div
+            className="col-span-8 flex items-center gap-8 rounded-3xl p-16"
+            style={{
+              background: "#fcf8fa",
+              boxShadow: "-8px -8px 16px 0px white, 8px 8px 16px 0px #d1d5db",
+            }}
+          >
+            {/* Text */}
+            <div className="flex-1 flex flex-col gap-4 min-w-0">
+              <h3 className="font-display font-medium text-2xl text-[#1b1b1d] leading-[1.3]">
+                Real-time Yields
+              </h3>
+              <p className="text-[#45464d] text-base leading-relaxed pb-4">
+                {"Don't just save—earn. Your pool's idle capital is put to work in low-risk liquidity pools, returning value to the group members."}
+              </p>
+              <div>
+                <button
+                  className="font-semibold text-sm text-[#006c49] px-6 py-4 rounded-lg tracking-[0.01em]"
+                  style={{
+                    background: "#fcf8fa",
+                    boxShadow: "-4px -4px 10px 0px white, 4px 4px 10px 0px #d1d5db",
+                  }}
+                >
+                  Learn about Yields
+                </button>
+              </div>
             </div>
-            <h3 className="font-display font-semibold text-slate-900 text-xl mb-3">Real-time Yields</h3>
-            <p className="text-slate-500 text-sm leading-relaxed mb-6">
-              {"Don't just save—earn. Your pool's idle capital is put to work in low-risk liquidity pools, returning value to the group members."}
-            </p>
-            <a href="#stellar" className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
-              Learn about Yields
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </a>
+
+            {/* Growth visualization */}
+            <div className="flex-1 min-w-0">
+              <div className="rounded-3xl overflow-hidden aspect-square w-full">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imgGrowthVisualization}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
     </section>
