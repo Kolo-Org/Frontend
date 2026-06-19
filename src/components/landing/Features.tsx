@@ -29,7 +29,6 @@ export default function Features() {
 
         {/* Bento grid — 12 columns */}
         <div className="grid grid-cols-12 gap-8">
-
           {/* Feature 1: Community Pools — cols 1–8 */}
           <div
             className="col-span-8 flex flex-col justify-between rounded-3xl p-16"
@@ -42,11 +41,16 @@ export default function Features() {
               <div
                 className="w-14 h-14 flex items-center justify-center rounded-2xl shrink-0"
                 style={{
-                  boxShadow: "-6px -6px 12px 0px white, 6px 6px 12px 0px #d1d5db",
+                  boxShadow:
+                    "-6px -6px 12px 0px white, 6px 6px 12px 0px #d1d5db",
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={imgCommunityIcon} alt="" className="w-[29px] h-[21px]" />
+                <img
+                  src={imgCommunityIcon}
+                  alt=""
+                  className="w-[29px] h-[21px]"
+                />
               </div>
               <div className="pt-2">
                 <h3 className="font-display font-medium text-2xl text-[#1b1b1d] leading-[1.3]">
@@ -54,9 +58,9 @@ export default function Features() {
                 </h3>
               </div>
               <p className="text-[#45464d] text-base leading-relaxed">
-                Launch a private saving circle with friends, family, or your local
-                business community. Automate contributions and payouts without the
-                manual headache.
+                Launch a private saving circle with friends, family, or your
+                local business community. Automate contributions and payouts
+                without the manual headache.
               </p>
             </div>
 
@@ -101,7 +105,11 @@ export default function Features() {
                 style={{ background: "rgba(255,255,255,0.2)" }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={imgWhatsAppIcon} alt="" className="w-[27px] h-[27px]" />
+                <img
+                  src={imgWhatsAppIcon}
+                  alt=""
+                  className="w-[27px] h-[27px]"
+                />
               </div>
             </div>
 
@@ -116,9 +124,7 @@ export default function Features() {
             </div>
 
             <div className="flex items-center justify-center mt-auto">
-              <div
-                className="w-[200px] h-[200px] rounded-2xl overflow-hidden relative opacity-90"
-              >
+              <div className="w-[200px] h-[200px] rounded-2xl overflow-hidden relative opacity-90">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={imgWhatsAppChat}
@@ -142,11 +148,16 @@ export default function Features() {
               <div
                 className="w-14 h-14 flex items-center justify-center rounded-2xl"
                 style={{
-                  boxShadow: "-6px -6px 12px 0px white, 6px 6px 12px 0px #d1d5db",
+                  boxShadow:
+                    "-6px -6px 12px 0px white, 6px 6px 12px 0px #d1d5db",
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={imgMilitaryIcon} alt="" className="w-[21px] h-[27px]" />
+                <img
+                  src={imgMilitaryIcon}
+                  alt=""
+                  className="w-[21px] h-[27px]"
+                />
               </div>
             </div>
             <h3 className="font-display font-medium text-2xl text-[#1b1b1d] leading-[1.3] pb-4">
@@ -172,14 +183,17 @@ export default function Features() {
                 Real-time Yields
               </h3>
               <p className="text-[#45464d] text-base leading-relaxed pb-4">
-                {"Don't just save—earn. Your pool's idle capital is put to work in low-risk liquidity pools, returning value to the group members."}
+                {
+                  "Don't just save—earn. Your pool's idle capital is put to work in low-risk liquidity pools, returning value to the group members."
+                }
               </p>
               <div>
                 <button
                   className="font-semibold text-sm text-[#006c49] px-6 py-4 rounded-lg tracking-[0.01em]"
                   style={{
                     background: "#fcf8fa",
-                    boxShadow: "-4px -4px 10px 0px white, 4px 4px 10px 0px #d1d5db",
+                    boxShadow:
+                      "-4px -4px 10px 0px white, 4px 4px 10px 0px #d1d5db",
                   }}
                 >
                   Learn about Yields
@@ -199,7 +213,6 @@ export default function Features() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

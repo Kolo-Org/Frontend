@@ -1,1 +1,3 @@
-export default function SendPayment() { return <div>Send Payment</div>; }
+export default function SendPayment() {
+  return <div>Send Payment</div>;
+}

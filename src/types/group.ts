@@ -1,1 +1,3 @@
-export interface Group { id: string; }
+export interface Group {
+  id: string;
+}

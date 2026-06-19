@@ -1,7 +1,11 @@
-const imgStar = "https://www.figma.com/api/mcp/asset/567fa96a-2d4b-43e4-99c5-562ce1366cd4";
-const imgSarahM = "https://www.figma.com/api/mcp/asset/59eae3b3-5528-4629-934f-c53fd8e7dc38";
-const imgDavidO = "https://www.figma.com/api/mcp/asset/5bbef5c1-f3cc-4385-88bf-1c6fc4fc176e";
-const imgJamesT = "https://www.figma.com/api/mcp/asset/f149408a-13bc-4d77-832c-cdab6e633040";
+const imgStar =
+  "https://www.figma.com/api/mcp/asset/567fa96a-2d4b-43e4-99c5-562ce1366cd4";
+const imgSarahM =
+  "https://www.figma.com/api/mcp/asset/59eae3b3-5528-4629-934f-c53fd8e7dc38";
+const imgDavidO =
+  "https://www.figma.com/api/mcp/asset/5bbef5c1-f3cc-4385-88bf-1c6fc4fc176e";
+const imgJamesT =
+  "https://www.figma.com/api/mcp/asset/f149408a-13bc-4d77-832c-cdab6e633040";
 
 const testimonials = [
   {
@@ -60,7 +64,12 @@ export default function Testimonials() {
               <div className="flex gap-1 pb-6" aria-label="5 out of 5 stars">
                 {Array.from({ length: 5 }).map((_, i) => (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img key={i} src={imgStar} alt="" className="w-[11.667px] h-[11.083px]" />
+                  <img
+                    key={i}
+                    src={imgStar}
+                    alt=""
+                    className="w-[11.667px] h-[11.083px]"
+                  />
                 ))}
               </div>
 
@@ -76,7 +85,8 @@ export default function Testimonials() {
                 <div
                   className="w-12 h-12 rounded-full overflow-hidden shrink-0 relative"
                   style={{
-                    boxShadow: "-6px -6px 12px 0px white, 6px 6px 12px 0px #d1d5db",
+                    boxShadow:
+                      "-6px -6px 12px 0px white, 6px 6px 12px 0px #d1d5db",
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -87,8 +97,12 @@ export default function Testimonials() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[#1b1b1d] text-base leading-6">{name}</span>
-                  <span className="text-[#45464d] text-base leading-6">{role}</span>
+                  <span className="text-[#1b1b1d] text-base leading-6">
+                    {name}
+                  </span>
+                  <span className="text-[#45464d] text-base leading-6">
+                    {role}
+                  </span>
                 </div>
               </div>
             </div>

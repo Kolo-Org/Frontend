@@ -1,9 +1,13 @@
 import Link from "next/link";
 
-const imgKoloLogo = "https://www.figma.com/api/mcp/asset/56e99059-7d00-4280-bf52-6696050d08c1";
-const imgIconGlobe = "https://www.figma.com/api/mcp/asset/76cc3dc8-8eeb-497c-b861-f99c4469cecc";
-const imgIconCommunity = "https://www.figma.com/api/mcp/asset/d24d2e5f-2a02-4879-9ced-4d92c6e9928c";
-const imgIconInstitution = "https://www.figma.com/api/mcp/asset/640290cb-77cc-47df-b7a5-afabab2b79a2";
+const imgKoloLogo =
+  "https://www.figma.com/api/mcp/asset/56e99059-7d00-4280-bf52-6696050d08c1";
+const imgIconGlobe =
+  "https://www.figma.com/api/mcp/asset/76cc3dc8-8eeb-497c-b861-f99c4469cecc";
+const imgIconCommunity =
+  "https://www.figma.com/api/mcp/asset/d24d2e5f-2a02-4879-9ced-4d92c6e9928c";
+const imgIconInstitution =
+  "https://www.figma.com/api/mcp/asset/640290cb-77cc-47df-b7a5-afabab2b79a2";
 
 const columns = [
   {
@@ -50,7 +54,9 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={imgKoloLogo} alt="Kolo" className="w-8 h-8" />
-              <span className="font-display font-bold text-base text-[#1b1b1d]">Kolo</span>
+              <span className="font-display font-bold text-base text-[#1b1b1d]">
+                Kolo
+              </span>
             </Link>
             <p className="text-[#45464d] text-base leading-6">
               Social savings infrastructure for the next billion
@@ -69,7 +75,10 @@ export default function Footer() {
             <ul className="flex flex-col gap-4">
               {columns[0].links.map(({ label, href }) => (
                 <li key={label}>
-                  <Link href={href} className="text-[#45464d] text-base leading-6 hover:text-[#1b1b1d] transition-colors">
+                  <Link
+                    href={href}
+                    className="text-[#45464d] text-base leading-6 hover:text-[#1b1b1d] transition-colors"
+                  >
                     {label}
                   </Link>
                 </li>
@@ -85,7 +94,10 @@ export default function Footer() {
             <ul className="flex flex-col gap-4">
               {columns[1].links.map(({ label, href }) => (
                 <li key={label}>
-                  <Link href={href} className="text-[#45464d] text-base leading-6 hover:text-[#1b1b1d] transition-colors">
+                  <Link
+                    href={href}
+                    className="text-[#45464d] text-base leading-6 hover:text-[#1b1b1d] transition-colors"
+                  >
                     {label}
                   </Link>
                 </li>
@@ -101,7 +113,10 @@ export default function Footer() {
             <ul className="flex flex-col gap-4">
               {columns[2].links.map(({ label, href }) => (
                 <li key={label}>
-                  <Link href={href} className="text-[#45464d] text-base leading-6 hover:text-[#1b1b1d] transition-colors">
+                  <Link
+                    href={href}
+                    className="text-[#45464d] text-base leading-6 hover:text-[#1b1b1d] transition-colors"
+                  >
                     {label}
                   </Link>
                 </li>

@@ -1,1 +1,3 @@
-export async function GET() { return Response.json({ message: "Wallet route" }); }
+export async function GET() {
+  return Response.json({ message: "Wallet route" });
+}
