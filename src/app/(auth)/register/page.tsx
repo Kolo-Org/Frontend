@@ -1,1 +1,3 @@
-export default function Register() { return <div>Register Page</div>; }
+export default function Register() {
+  return <div>Register Page</div>;
+}

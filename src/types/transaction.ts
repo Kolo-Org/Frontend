@@ -1,1 +1,3 @@
-export interface Transaction { id: string; }
+export interface Transaction {
+  id: string;
+}

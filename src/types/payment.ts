@@ -1,1 +1,3 @@
-export interface Payment { id: string; }
+export interface Payment {
+  id: string;
+}

@@ -30,12 +30,17 @@ export default function HowItWorks() {
           <h2 className="font-display text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
             Simple as Sending a Text
           </h2>
-          <p className="text-slate-500 text-lg">Three steps to financial freedom.</p>
+          <p className="text-slate-500 text-lg">
+            Three steps to financial freedom.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-10 md:gap-8">
           {steps.map(({ number, title, description }) => (
-            <div key={number} className="flex flex-col items-center text-center">
+            <div
+              key={number}
+              className="flex flex-col items-center text-center"
+            >
               <div
                 className="w-24 h-24 rounded-full flex items-center justify-center mb-8 text-3xl font-display font-bold text-emerald-600"
                 style={{

@@ -35,7 +35,8 @@ export default function Hero() {
         {/* Subtitle */}
         <div className="mt-8 mb-8">
           <p className="text-[#45464d] text-lg text-center leading-relaxed">
-            Kolo brings the power of community savings (Chamas) to your WhatsApp.
+            Kolo brings the power of community savings (Chamas) to your
+            WhatsApp.
             <br />
             Secure, transparent, and built on the Stellar blockchain.
           </p>

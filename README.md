@@ -3,6 +3,7 @@
 This is the official Next.js frontend repository for the Kolo application. The application is built using the Next.js App Router, strict TypeScript, and TailwindCSS, establishing a robust, production-ready foundation for future Stellar wallet, payment, and Soroban integrations.
 
 ## Tech Stack
+
 - **Framework**: Next.js (App Router)
 - **Language**: TypeScript (Strict Mode)
 - **Styling**: TailwindCSS
@@ -14,6 +15,7 @@ To get started with development locally:
 
 1. **Install Dependencies**
    Make sure you have Node.js installed, then run:
+
    ```bash
    npm install
    ```
@@ -42,7 +44,20 @@ The application implements a clean, atomic folder architecture separating concer
 ## Development Workflow
 
 - **Branching**: Always branch off `main` to create features (`feature/my-feature`).
-- **Committing**: Ensure the code builds properly and all type checks pass before committing. 
+- **Committing**: Ensure the code builds properly and all type checks pass before committing.
 - **Validation**:
   - Run `npm run build` to verify Next.js static rendering and TypeScript compilation.
   - Run `npm run lint` to catch stylistic and syntax errors.
+  - Run `npm run format` to check Prettier formatting (`npm run format:fix` to auto-fix).
+
+## Continuous Integration
+
+Every pull request and push to `main` runs the CI workflow defined in `.github/workflows/ci.yml`:
+
+- **Lint** — `npm run lint` (ESLint)
+- **Type Check** — `npx tsc --noEmit` (strict TypeScript)
+- **Format Check** — `npm run format` (Prettier)
+- **Build** — `npm run build` (Next.js production build, with `.next/cache` caching)
+- **Test** — runs `npm test` if a test script is defined; otherwise reports a no-op until tests are added
+
+The `main` branch requires this workflow to pass before a PR can be merged.

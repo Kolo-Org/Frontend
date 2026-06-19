@@ -1,1 +1,3 @@
-export interface Wallet { id: string; }
+export interface Wallet {
+  id: string;
+}

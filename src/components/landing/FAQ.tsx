@@ -37,7 +37,10 @@ export default function FAQ() {
             <div
               key={i}
               className="bg-white rounded-2xl overflow-hidden"
-              style={{ boxShadow: "4px 4px 12px rgba(0,0,0,0.05), -2px -2px 8px rgba(255,255,255,0.9)" }}
+              style={{
+                boxShadow:
+                  "4px 4px 12px rgba(0,0,0,0.05), -2px -2px 8px rgba(255,255,255,0.9)",
+              }}
             >
               <button
                 className="w-full flex items-center justify-between px-6 py-5 text-left"
@@ -61,7 +64,9 @@ export default function FAQ() {
 
               {open === i && (
                 <div className="px-6 pb-5">
-                  <p className="text-slate-500 text-sm leading-relaxed">{answer}</p>
+                  <p className="text-slate-500 text-sm leading-relaxed">
+                    {answer}
+                  </p>
                 </div>
               )}
             </div>

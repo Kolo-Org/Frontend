@@ -19,11 +19,16 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
-              <svg viewBox="0 0 20 20" className="w-4 h-4 text-white fill-white">
+              <svg
+                viewBox="0 0 20 20"
+                className="w-4 h-4 text-white fill-white"
+              >
                 <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm.75 4.5v3.75h3.75a.75.75 0 010 1.5h-3.75V15.5a.75.75 0 01-1.5 0v-3.75H5.5a.75.75 0 010-1.5h3.75V6.5a.75.75 0 011.5 0z" />
               </svg>
             </div>
-            <span className="font-display font-bold text-xl text-slate-900">Kolo</span>
+            <span className="font-display font-bold text-xl text-slate-900">
+              Kolo
+            </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
@@ -60,11 +65,25 @@ export default function Navbar() {
             aria-expanded={open}
           >
             {open ? (
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             ) : (
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <svg
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
                 <path d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
@@ -85,10 +104,16 @@ export default function Navbar() {
             </a>
           ))}
           <div className="pt-3 border-t border-slate-100 mt-2 flex flex-col gap-2">
-            <Link href="/login" className="block px-3 py-2.5 text-sm font-medium text-slate-700 rounded-lg text-center">
+            <Link
+              href="/login"
+              className="block px-3 py-2.5 text-sm font-medium text-slate-700 rounded-lg text-center"
+            >
               Login
             </Link>
-            <Link href="/register" className="block px-3 py-2.5 rounded-lg bg-emerald-500 text-white text-sm font-semibold text-center">
+            <Link
+              href="/register"
+              className="block px-3 py-2.5 rounded-lg bg-emerald-500 text-white text-sm font-semibold text-center"
+            >
               Get Started
             </Link>
           </div>
