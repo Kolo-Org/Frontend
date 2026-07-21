@@ -57,7 +57,7 @@ function getClientSnapshot(): AuthSnapshot {
   } catch {
     raw = null;
   }
-  if (raw !== cachedRaw || clientSnapshot.isLoading) {
+  if (raw !== cachedRaw) {
     cachedRaw = raw;
     let user: AuthUser | null = null;
     try {

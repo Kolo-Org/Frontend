@@ -29,6 +29,7 @@ export function InviteConfirm({ code }: InviteConfirmProps) {
   const [phase, setPhase] = useState<Phase>("loading");
   const [group, setGroup] = useState<Group | null>(null);
   const [joining, setJoining] = useState(false);
+  const [joinError, setJoinError] = useState<string | null>(null);
 
   // Resolve the invite once the auth session has hydrated.
   useEffect(() => {
@@ -36,25 +37,35 @@ export function InviteConfirm({ code }: InviteConfirmProps) {
 
     let active = true;
 
-    groupsService.getInvite(code).then((resolution) => {
-      if (!active) return;
+    groupsService
+      .getInvite(code)
+      .then((resolution) => {
+        if (!active) return;
 
-      if (!resolution) {
+        if (!resolution) {
+          setPhase("invalid");
+          return;
+        }
+
+        setGroup(resolution.group);
+
+        if (!isAuthenticated) {
+          // Preserve context: come straight back here after signup.
+          // Encode the whole path so codes containing &/=/# survive the round-trip.
+          setPhase("redirecting");
+          router.replace(
+            `/register?redirect=${encodeURIComponent(`/invite/${code}`)}`,
+          );
+          return;
+        }
+
+        setPhase("confirm");
+      })
+      .catch(() => {
+        // Don't leave the screen spinning forever if resolution fails.
+        if (!active) return;
         setPhase("invalid");
-        return;
-      }
-
-      setGroup(resolution.group);
-
-      if (!isAuthenticated) {
-        // Preserve context: come straight back here after signup.
-        setPhase("redirecting");
-        router.replace(`/register?redirect=/invite/${code}`);
-        return;
-      }
-
-      setPhase("confirm");
-    });
+      });
 
     return () => {
       active = false;
@@ -64,9 +75,16 @@ export function InviteConfirm({ code }: InviteConfirmProps) {
   async function handleJoin() {
     if (!group) return;
     setJoining(true);
-    await groupsService.joinGroup(group.id);
-    setJoining(false);
-    setPhase("joined");
+    setJoinError(null);
+    try {
+      await groupsService.joinGroup(group.id);
+      setPhase("joined");
+    } catch {
+      // Keep the user on the confirm screen so they can retry.
+      setJoinError("Something went wrong joining the group. Please try again.");
+    } finally {
+      setJoining(false);
+    }
   }
 
   return (
@@ -130,6 +148,11 @@ export function InviteConfirm({ code }: InviteConfirmProps) {
             >
               {joining ? "Joining…" : "Join Group"}
             </button>
+            {joinError && (
+              <p className="mt-3 text-sm text-red-500" role="alert">
+                {joinError}
+              </p>
+            )}
           </div>
         )}
 

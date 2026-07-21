@@ -114,7 +114,12 @@ export function AuthForm({ mode }: AuthFormProps) {
 /** Only allow same-site relative redirects to avoid open-redirect issues. */
 function safeRedirect(value: string | null): string | null {
   if (!value) return null;
-  return value.startsWith("/") && !value.startsWith("//") ? value : null;
+  // Must be a single-slash absolute path. Reject protocol-relative ("//") and
+  // backslash-based ("/\evil.com") forms, both of which browsers resolve to an
+  // external origin once handed to router.replace.
+  if (!value.startsWith("/") || value.startsWith("//")) return null;
+  if (value.includes("\\")) return null;
+  return value;
 }
 
 interface FieldProps {
