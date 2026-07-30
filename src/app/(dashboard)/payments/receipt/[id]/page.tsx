@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle, Share2, Download, ArrowLeft, ExternalLink, Loader2 } from "lucide-react";
+import { CheckCircle, XCircle, Share2, Download, ArrowLeft, ExternalLink, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
 
@@ -25,6 +25,8 @@ export default function TransactionReceipt({ params }: { params: Promise<{ id: s
   const [txData, setTxData] = useState<TxData | null>(null);
 
   useEffect(() => {
+    let active = true;
+
     async function loadTransaction() {
       if (!unwrappedParams.id) {
         setLoading(false);
@@ -40,31 +42,39 @@ export default function TransactionReceipt({ params }: { params: Promise<{ id: s
           const ops = await opsRes.json();
           const paymentOp = ops._embedded?.records?.find((op: { type: string; amount?: string; starting_balance?: string; to?: string; account?: string; asset_code?: string; }) => op.type === "payment" || op.type === "create_account");
           
-          setTxData({
-            id: unwrappedParams.id,
-            amount: paymentOp?.amount || paymentOp?.starting_balance || "0.00",
-            currency: paymentOp?.asset_code || "XLM",
-            status: tx.successful ? "Success" : "Failed",
-            date: new Date(tx.created_at).toLocaleString("en-US", {
-              month: "short", day: "numeric", year: "numeric",
-              hour: "numeric", minute: "numeric", hour12: true,
-            }),
-            from: tx.source_account,
-            to: paymentOp?.to || paymentOp?.account || "Unknown",
-            networkFee: (parseInt(tx.fee_charged) / 10000000).toString() + " XLM",
-            network: "Stellar Testnet",
-            fullHash: unwrappedParams.id
-          });
+          if (active) {
+            setTxData({
+              id: unwrappedParams.id,
+              amount: paymentOp?.amount || paymentOp?.starting_balance || "0.00",
+              currency: paymentOp?.asset_code || "XLM",
+              status: tx.successful ? "Success" : "Failed",
+              date: new Date(tx.created_at).toLocaleString("en-US", {
+                month: "short", day: "numeric", year: "numeric",
+                hour: "numeric", minute: "numeric", hour12: true,
+              }),
+              from: tx.source_account,
+              to: paymentOp?.to || paymentOp?.account || "Unknown",
+              networkFee: (parseInt(tx.fee_charged) / 10000000).toString() + " XLM",
+              network: "Stellar Testnet",
+              fullHash: unwrappedParams.id
+            });
+          }
         }
       } catch (err) {
         console.error("Failed to load transaction", err);
       } finally {
-        setLoading(false);
-        setMounted(true);
+        if (active) {
+          setLoading(false);
+          setMounted(true);
+        }
       }
     }
     
     loadTransaction();
+
+    return () => {
+      active = false;
+    };
   }, [unwrappedParams.id]);
 
   if (!mounted) return null;
@@ -130,15 +140,27 @@ export default function TransactionReceipt({ params }: { params: Promise<{ id: s
         className="w-full max-w-md bg-white/70 dark:bg-zinc-900/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-zinc-200/50 dark:border-zinc-800/50 overflow-hidden"
       >
         <div className="p-8 text-center border-b border-zinc-200/50 dark:border-zinc-800/50 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-emerald-600" />
+          {transaction.status === "Failed" ? (
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-rose-400 to-rose-600" />
+          ) : (
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-emerald-600" />
+          )}
           
           <motion.div 
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
-            className="w-20 h-20 mx-auto bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+            className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(0,0,0,0.1)] ${
+              transaction.status === "Failed" 
+                ? "bg-rose-100 dark:bg-rose-900/30 shadow-[0_0_20px_rgba(244,63,94,0.2)]" 
+                : "bg-emerald-100 dark:bg-emerald-900/30 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+            }`}
           >
-            <CheckCircle className="w-10 h-10 text-emerald-500" />
+            {transaction.status === "Failed" ? (
+              <XCircle className="w-10 h-10 text-rose-500" />
+            ) : (
+              <CheckCircle className="w-10 h-10 text-emerald-500" />
+            )}
           </motion.div>
 
           <motion.h2 
@@ -155,7 +177,9 @@ export default function TransactionReceipt({ params }: { params: Promise<{ id: s
             transition={{ delay: 0.4 }}
             className="text-zinc-500 dark:text-zinc-400 font-medium"
           >
-            Your transaction has been processed.
+            {transaction.status === "Failed" 
+              ? "Your transaction could not be completed."
+              : "Your transaction has been processed."}
           </motion.p>
 
           <motion.div
@@ -167,7 +191,9 @@ export default function TransactionReceipt({ params }: { params: Promise<{ id: s
             <span className="text-5xl font-black text-zinc-900 dark:text-white tracking-tight">
               {transaction.amount}
             </span>
-            <span className="text-xl font-bold text-emerald-500 ml-2">
+            <span className={`text-xl font-bold ml-2 ${
+              transaction.status === "Failed" ? "text-rose-500" : "text-emerald-500"
+            }`}>
               {transaction.currency}
             </span>
           </motion.div>
