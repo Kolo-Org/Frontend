@@ -1,40 +1,119 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle, Share2, Download, ArrowLeft, ExternalLink } from "lucide-react";
+import { CheckCircle, Share2, Download, ArrowLeft, ExternalLink, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
+
+interface TxData {
+  id: string;
+  amount: string;
+  currency: string;
+  status: string;
+  date: string;
+  from: string;
+  to: string;
+  networkFee: string;
+  network: string;
+  fullHash: string;
+}
 
 export default function TransactionReceipt({ params }: { params: Promise<{ id: string }> }) {
   const unwrappedParams = use(params);
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [txData, setTxData] = useState<TxData | null>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
+    async function loadTransaction() {
+      if (!unwrappedParams.id) {
+        setLoading(false);
+        setMounted(true);
+        return;
+      }
+
+      try {
+        const txRes = await fetch(`https://horizon-testnet.stellar.org/transactions/${unwrappedParams.id}`);
+        if (txRes.ok) {
+          const tx = await txRes.json();
+          const opsRes = await fetch(`https://horizon-testnet.stellar.org/transactions/${unwrappedParams.id}/operations`);
+          const ops = await opsRes.json();
+          const paymentOp = ops._embedded?.records?.find((op: { type: string; amount?: string; starting_balance?: string; to?: string; account?: string; asset_code?: string; }) => op.type === "payment" || op.type === "create_account");
+          
+          setTxData({
+            id: unwrappedParams.id,
+            amount: paymentOp?.amount || paymentOp?.starting_balance || "0.00",
+            currency: paymentOp?.asset_code || "XLM",
+            status: tx.successful ? "Success" : "Failed",
+            date: new Date(tx.created_at).toLocaleString("en-US", {
+              month: "short", day: "numeric", year: "numeric",
+              hour: "numeric", minute: "numeric", hour12: true,
+            }),
+            from: tx.source_account,
+            to: paymentOp?.to || paymentOp?.account || "Unknown",
+            networkFee: (parseInt(tx.fee_charged) / 10000000).toString() + " XLM",
+            network: "Stellar Testnet",
+            fullHash: unwrappedParams.id
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load transaction", err);
+      } finally {
+        setLoading(false);
+        setMounted(true);
+      }
+    }
+    
+    loadTransaction();
+  }, [unwrappedParams.id]);
 
   if (!mounted) return null;
 
-  const mockTransaction = {
+  // Fallback to mock data if the ID is invalid or API fails (e.g. during development testing)
+  const transaction = txData || {
     id: unwrappedParams.id || "tx_892348923h4k2j",
     amount: "150.00",
     currency: "USDC",
     status: "Success",
     date: new Date().toLocaleString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
+      month: "short", day: "numeric", year: "numeric",
+      hour: "numeric", minute: "numeric", hour12: true,
     }),
-    from: "GBX43...9L2M",
-    to: "GABC1...Z9X1",
+    from: "GBX434KV35F52345K2L3M",
+    to: "GABC1234KJ5H234K5J23X1",
     networkFee: "0.00001 XLM",
-    network: "Stellar Public Network",
-    hash: "f4a8b...19c2"
+    network: "Stellar Testnet",
+    fullHash: unwrappedParams.id || "f4a8b...19c2"
   };
+
+  const shortenStr = (str: string) => {
+    if (str.length < 12) return str;
+    return `${str.substring(0, 5)}...${str.substring(str.length - 4)}`;
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Stellar Transaction Receipt',
+        url: window.location.href
+      }).catch(console.error);
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copied to clipboard!");
+    }
+  };
+
+  const handleDownload = () => {
+    window.print();
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-[80vh] flex flex-col items-center justify-center p-6 sm:p-12 relative overflow-hidden">
+        <Loader2 className="w-10 h-10 text-emerald-500 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center p-6 sm:p-12 relative overflow-hidden">
@@ -68,7 +147,7 @@ export default function TransactionReceipt({ params }: { params: Promise<{ id: s
             transition={{ delay: 0.3 }}
             className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2"
           >
-            Payment Successful
+            Payment {transaction.status}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -86,10 +165,10 @@ export default function TransactionReceipt({ params }: { params: Promise<{ id: s
             className="mt-6"
           >
             <span className="text-5xl font-black text-zinc-900 dark:text-white tracking-tight">
-              {mockTransaction.amount}
+              {transaction.amount}
             </span>
             <span className="text-xl font-bold text-emerald-500 ml-2">
-              {mockTransaction.currency}
+              {transaction.currency}
             </span>
           </motion.div>
         </div>
@@ -103,32 +182,37 @@ export default function TransactionReceipt({ params }: { params: Promise<{ id: s
           >
             <div className="flex justify-between items-center text-sm">
               <span className="text-zinc-500 dark:text-zinc-400">Date</span>
-              <span className="font-medium text-zinc-900 dark:text-zinc-100">{mockTransaction.date}</span>
+              <span className="font-medium text-zinc-900 dark:text-zinc-100">{transaction.date}</span>
             </div>
             
             <div className="h-px w-full bg-gradient-to-r from-transparent via-zinc-200 dark:via-zinc-800 to-transparent" />
             
             <div className="flex justify-between items-center text-sm">
               <span className="text-zinc-500 dark:text-zinc-400">From</span>
-              <span className="font-medium text-zinc-900 dark:text-zinc-100 font-mono">{mockTransaction.from}</span>
+              <span className="font-medium text-zinc-900 dark:text-zinc-100 font-mono" title={transaction.from}>{shortenStr(transaction.from)}</span>
             </div>
             <div className="flex justify-between items-center text-sm">
               <span className="text-zinc-500 dark:text-zinc-400">To</span>
-              <span className="font-medium text-zinc-900 dark:text-zinc-100 font-mono">{mockTransaction.to}</span>
+              <span className="font-medium text-zinc-900 dark:text-zinc-100 font-mono" title={transaction.to}>{shortenStr(transaction.to)}</span>
             </div>
 
             <div className="h-px w-full bg-gradient-to-r from-transparent via-zinc-200 dark:via-zinc-800 to-transparent" />
             
             <div className="flex justify-between items-center text-sm">
               <span className="text-zinc-500 dark:text-zinc-400">Network Fee</span>
-              <span className="font-medium text-zinc-900 dark:text-zinc-100">{mockTransaction.networkFee}</span>
+              <span className="font-medium text-zinc-900 dark:text-zinc-100">{transaction.networkFee}</span>
             </div>
             <div className="flex justify-between items-center text-sm">
               <span className="text-zinc-500 dark:text-zinc-400">Transaction ID</span>
-              <div className="flex items-center gap-1.5 text-blue-500 hover:text-blue-600 transition-colors cursor-pointer group">
-                <span className="font-medium font-mono">{mockTransaction.hash}</span>
+              <a 
+                href={`https://stellar.expert/explorer/testnet/tx/${transaction.fullHash}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-blue-500 hover:text-blue-600 transition-colors group"
+              >
+                <span className="font-medium font-mono" title={transaction.fullHash}>{shortenStr(transaction.fullHash)}</span>
                 <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </div>
+              </a>
             </div>
           </motion.div>
 
@@ -138,11 +222,17 @@ export default function TransactionReceipt({ params }: { params: Promise<{ id: s
             transition={{ delay: 0.7 }}
             className="flex gap-4 pt-4"
           >
-            <button className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-semibold transition-colors">
+            <button 
+              onClick={handleDownload}
+              className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-semibold transition-colors"
+            >
               <Download className="w-4 h-4" />
               PDF
             </button>
-            <button className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-semibold transition-colors">
+            <button 
+              onClick={handleShare}
+              className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-semibold transition-colors"
+            >
               <Share2 className="w-4 h-4" />
               Share
             </button>
@@ -154,7 +244,7 @@ export default function TransactionReceipt({ params }: { params: Promise<{ id: s
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
-        className="mt-8"
+        className="mt-8 print:hidden"
       >
         <Link 
           href="/dashboard"
