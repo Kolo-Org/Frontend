@@ -1,5 +1,6 @@
 import { groupsService } from "@/services/api/groups";
 import { InviteButton } from "@/components/groups/InviteButton";
+import Link from "next/link";
 
 export default async function Groups() {
   const groups = await groupsService.listGroups();
@@ -22,8 +23,8 @@ export default async function Groups() {
             className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm"
           >
             <div className="flex items-start justify-between gap-4">
-              <div>
-                <h2 className="font-display text-lg font-semibold text-slate-900">
+              <Link href={`/groups/${group.id}`} className="block flex-1 group">
+                <h2 className="font-display text-lg font-semibold text-slate-900 group-hover:text-green-600 transition-colors">
                   {group.name}
                 </h2>
                 {group.description && (
@@ -36,7 +37,7 @@ export default async function Groups() {
                     {group.memberCount} members
                   </p>
                 )}
-              </div>
+              </Link>
             </div>
 
             <div className="mt-4 border-t border-slate-100 pt-4">
