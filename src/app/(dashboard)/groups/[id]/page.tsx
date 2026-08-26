@@ -19,14 +19,22 @@ export default function GroupDetails() {
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
 
   useEffect(() => {
-    if (params?.id) {
-      groupsService.getGroup(params.id).then((fetched) => {
+    let mounted = true;
+    const fetchGroup = async () => {
+      if (!params?.id) {
+        if (mounted) setIsLoading(false);
+        return;
+      }
+      const fetched = await groupsService.getGroup(params.id);
+      if (mounted) {
         setGroup(fetched);
         setIsLoading(false);
-      });
-    } else {
-      setIsLoading(false);
-    }
+      }
+    };
+    fetchGroup();
+    return () => {
+      mounted = false;
+    };
   }, [params?.id]);
 
   // Mock data to match the Figma design
