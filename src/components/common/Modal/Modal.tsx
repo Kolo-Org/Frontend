@@ -23,6 +23,7 @@ export const Modal: React.FC<ModalProps> = ({
           <h3 className="text-xl font-bold text-gray-900">{title}</h3>
           <button
             onClick={onClose}
+            aria-label="Close modal"
             className="text-gray-400 hover:text-gray-600 transition-colors rounded-full p-1 hover:bg-gray-100"
           >
             <X size={20} />

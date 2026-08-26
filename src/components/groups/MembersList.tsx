@@ -1,7 +1,12 @@
 import React from "react";
 import { UserPlus } from "lucide-react";
 
-export type MemberStatus = "CONTRIBUTED" | "WAITING" | "PENDING";
+export type MemberStatus =
+  | "CONTRIBUTED"
+  | "WAITING"
+  | "PENDING"
+  | "PAYOUT_RECEIVED"
+  | "LATE";
 
 export interface Member {
   id: string;
@@ -24,6 +29,10 @@ export const MembersList: React.FC<MembersListProps> = ({
     switch (status) {
       case "CONTRIBUTED":
         return "bg-[#a3f4cd] text-[#047857]";
+      case "PAYOUT_RECEIVED":
+        return "bg-blue-100 text-blue-700";
+      case "LATE":
+        return "bg-red-100 text-red-700";
       case "WAITING":
         return "bg-gray-100 text-gray-500";
       case "PENDING":
@@ -38,6 +47,7 @@ export const MembersList: React.FC<MembersListProps> = ({
         <h3 className="text-xl font-bold text-gray-800">Members</h3>
         <button
           onClick={onInvite}
+          aria-label="Invite member"
           className="p-2 bg-green-50 text-green-600 rounded-full hover:bg-green-100 transition-colors"
         >
           <UserPlus size={18} />

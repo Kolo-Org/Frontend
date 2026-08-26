@@ -17,12 +17,22 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputValue.trim()) {
+    const trimmed = inputValue.trim();
+    if (!trimmed) {
       setError("Please enter an email address or phone number.");
       return;
     }
+
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+    const isPhone = /^\+?[0-9]{10,15}$/.test(trimmed);
+
+    if (!isEmail && !isPhone) {
+      setError("Please enter a valid email address or phone number.");
+      return;
+    }
+
     setError("");
-    onInvite(inputValue);
+    onInvite(trimmed);
     setInputValue("");
   };
 

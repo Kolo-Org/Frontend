@@ -1,6 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { groupsService } from "../../../../services/api/groups";
+import type { Group } from "../../../../types/group";
 import { GroupHeader } from "../../../../components/groups/GroupHeader";
 import { NextMilestone } from "../../../../components/groups/NextMilestone";
 import { RecentDeposits } from "../../../../components/groups/RecentDeposits";
@@ -10,7 +13,21 @@ import { HelpCard } from "../../../../components/groups/HelpCard";
 import { InviteMemberModal } from "../../../../components/groups/InviteMemberModal";
 
 export default function GroupDetails() {
+  const params = useParams<{ id: string }>();
+  const [group, setGroup] = useState<Group | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (params?.id) {
+      groupsService.getGroup(params.id).then((fetched) => {
+        setGroup(fetched);
+        setIsLoading(false);
+      });
+    } else {
+      setIsLoading(false);
+    }
+  }, [params?.id]);
 
   // Mock data to match the Figma design
   const members: Member[] = [
@@ -68,12 +85,28 @@ export default function GroupDetails() {
     setIsInviteModalOpen(false);
   };
 
+  if (isLoading) {
+    return (
+      <div className="max-w-6xl mx-auto p-4 md:p-8 bg-[#f4f7f5] min-h-screen flex justify-center items-center">
+        <p className="text-gray-500">Loading group...</p>
+      </div>
+    );
+  }
+
+  if (!group) {
+    return (
+      <div className="max-w-6xl mx-auto p-4 md:p-8 bg-[#f4f7f5] min-h-screen flex justify-center items-center">
+        <p className="text-gray-500">Group not found or unavailable.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-8 bg-[#f4f7f5] min-h-screen">
       <GroupHeader
-        title="Family Education Fund"
+        title={group.name}
         totalSavings={480000}
-        activeMembers={8}
+        activeMembers={group.memberCount || 8}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -84,7 +117,11 @@ export default function GroupDetails() {
               milestoneName="Term Fees"
               progressPercentage={75}
               amountLeft={120000}
-              targetPayout={600000}
+              targetPayout={
+                group.contributionAmount && group.memberCount
+                  ? group.contributionAmount * group.memberCount
+                  : 600000
+              }
               dueDate="Sept 15"
               onContribute={() => console.log("Contribute clicked")}
             />
