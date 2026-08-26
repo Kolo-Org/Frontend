@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from './useAuth';
 
 export interface SavingsGroup {
   id: string;
@@ -15,9 +16,17 @@ export const useGroups = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const { user } = useAuth();
+
   useEffect(() => {
+    if (!user) {
+      const timer = setTimeout(() => setIsLoading(false), 0);
+      return () => clearTimeout(timer);
+    }
+
     const fetchGroups = async () => {
       try {
+        setIsLoading(true);
         await new Promise((resolve) => setTimeout(resolve, 800));
         setData([
           {
@@ -46,7 +55,7 @@ export const useGroups = () => {
       }
     };
     fetchGroups();
-  }, []);
+  }, [user]);
 
   return { data, isLoading, error };
 };

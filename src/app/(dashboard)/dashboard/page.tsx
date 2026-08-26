@@ -25,7 +25,7 @@ export default function Dashboard() {
         {/* Balance Card Section */}
         <section>
           {walletError ? (
-            <div className="p-4 bg-red-50 text-red-600 rounded-xl">Error loading wallet data</div>
+            <div className="w-full h-36 bg-red-50 border border-red-100 rounded-2xl flex items-center justify-center text-red-600 font-medium shadow-sm">Error loading wallet data</div>
           ) : (
             <BalanceCard 
               balance={walletData?.balance} 
@@ -39,7 +39,7 @@ export default function Dashboard() {
         {/* Savings Circles Section */}
         <section>
           {groupsError ? (
-            <div className="p-4 bg-red-50 text-red-600 rounded-xl">Error loading savings groups</div>
+            <div className="w-full h-64 bg-red-50 border border-red-100 rounded-2xl flex items-center justify-center text-red-600 font-medium shadow-sm">Error loading savings groups</div>
           ) : (
             <SavingsCircles 
               groups={groupsData || []} 
@@ -51,7 +51,7 @@ export default function Dashboard() {
         {/* Recent Activity Section */}
         <section>
           {paymentsError ? (
-            <div className="p-4 bg-red-50 text-red-600 rounded-xl">Error loading transactions</div>
+            <div className="w-full min-h-96 bg-red-50 border border-red-100 rounded-2xl flex items-center justify-center text-red-600 font-medium shadow-sm">Error loading transactions</div>
           ) : (
             <TransactionList 
               transactions={paymentsData || []} 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from './useAuth';
 
 export interface Transaction {
   id: string;
@@ -16,9 +17,17 @@ export const usePayments = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  const { user } = useAuth();
+
   useEffect(() => {
+    if (!user) {
+      const timer = setTimeout(() => setIsLoading(false), 0);
+      return () => clearTimeout(timer);
+    }
+
     const fetchPayments = async () => {
       try {
+        setIsLoading(true);
         await new Promise((resolve) => setTimeout(resolve, 800));
         setData([
           {
@@ -59,7 +68,7 @@ export const usePayments = () => {
       }
     };
     fetchPayments();
-  }, []);
+  }, [user]);
 
   return { data, isLoading, error };
 };

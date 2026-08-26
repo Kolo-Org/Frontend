@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Send, Plus, TrendingUp } from 'lucide-react';
+import { Send, Plus, TrendingUp, TrendingDown } from 'lucide-react';
 
 interface BalanceCardProps {
   balance?: number;
@@ -43,7 +43,11 @@ export function BalanceCard({ balance = 0, currency = 'USDC', trendPercentage = 
           <span className="text-lg font-medium text-emerald-600">{currency}</span>
         </div>
         <div className="flex items-center gap-1.5 text-sm">
-          <TrendingUp className={`w-4 h-4 ${isPositiveTrend ? 'text-emerald-600' : 'text-red-500'}`} />
+          {isPositiveTrend ? (
+            <TrendingUp className="w-4 h-4 text-emerald-600" />
+          ) : (
+            <TrendingDown className="w-4 h-4 text-red-500" />
+          )}
           <span className={`${isPositiveTrend ? 'text-emerald-600' : 'text-red-500'} font-medium`}>
             {isPositiveTrend ? '+' : ''}{trendPercentage}%
           </span>
