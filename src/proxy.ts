@@ -22,9 +22,10 @@ export function proxy(request: NextRequest): NextResponse {
   );
 
   if (isProtected && !hasSession) {
-    const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("from", pathname);
-    return NextResponse.redirect(loginUrl);
+    // TEMPORARY BYPASS FOR UI DEVELOPMENT
+    // const loginUrl = new URL("/login", request.url);
+    // loginUrl.searchParams.set("from", pathname);
+    // return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();
