@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from './useAuth';
+import { useState, useEffect } from "react";
+import { useAuth } from "./useAuth";
 
 export interface WalletData {
   balance: number;
@@ -25,15 +25,17 @@ export const useWallet = () => {
         setIsLoading(true);
         // Simulate API call scoped to user
         await new Promise((resolve) => setTimeout(resolve, 800));
-        
+
         // Mocked response for user ${user.id}
         setData({
-          balance: 12450.00,
-          currency: 'USDC',
+          balance: 12450.0,
+          currency: "USDC",
           trendPercentage: 2.4,
         });
       } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to fetch wallet data'));
+        setError(
+          err instanceof Error ? err : new Error("Failed to fetch wallet data"),
+        );
       } finally {
         setIsLoading(false);
       }
