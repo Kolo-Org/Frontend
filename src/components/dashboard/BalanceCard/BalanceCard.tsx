@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Send, Plus, TrendingUp, TrendingDown } from 'lucide-react';
+import React from "react";
+import { Send, Plus, TrendingUp, TrendingDown } from "lucide-react";
 
 interface BalanceCardProps {
   balance?: number;
@@ -10,7 +10,12 @@ interface BalanceCardProps {
   isLoading?: boolean;
 }
 
-export function BalanceCard({ balance = 0, currency = 'USDC', trendPercentage = 0, isLoading = false }: BalanceCardProps) {
+export function BalanceCard({
+  balance = 0,
+  currency = "USDC",
+  trendPercentage = 0,
+  isLoading = false,
+}: BalanceCardProps) {
   if (isLoading) {
     return (
       <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between w-full h-36 animate-pulse">
@@ -27,7 +32,7 @@ export function BalanceCard({ balance = 0, currency = 'USDC', trendPercentage = 
     );
   }
 
-  const formattedBalance = new Intl.NumberFormat('en-US', {
+  const formattedBalance = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(balance);
@@ -37,10 +42,16 @@ export function BalanceCard({ balance = 0, currency = 'USDC', trendPercentage = 
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between w-full">
       <div>
-        <p className="text-sm font-medium text-gray-500 mb-1 uppercase tracking-wider">Total Balance</p>
+        <p className="text-sm font-medium text-gray-500 mb-1 uppercase tracking-wider">
+          Total Balance
+        </p>
         <div className="flex items-baseline gap-2 mb-2">
-          <h2 className="text-4xl font-bold text-gray-900">{formattedBalance}</h2>
-          <span className="text-lg font-medium text-emerald-600">{currency}</span>
+          <h2 className="text-4xl font-bold text-gray-900">
+            {formattedBalance}
+          </h2>
+          <span className="text-lg font-medium text-emerald-600">
+            {currency}
+          </span>
         </div>
         <div className="flex items-center gap-1.5 text-sm">
           {isPositiveTrend ? (
@@ -48,8 +59,11 @@ export function BalanceCard({ balance = 0, currency = 'USDC', trendPercentage = 
           ) : (
             <TrendingDown className="w-4 h-4 text-red-500" />
           )}
-          <span className={`${isPositiveTrend ? 'text-emerald-600' : 'text-red-500'} font-medium`}>
-            {isPositiveTrend ? '+' : ''}{trendPercentage}%
+          <span
+            className={`${isPositiveTrend ? "text-emerald-600" : "text-red-500"} font-medium`}
+          >
+            {isPositiveTrend ? "+" : ""}
+            {trendPercentage}%
           </span>
           <span className="text-gray-500">from last month</span>
         </div>
